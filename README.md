@@ -4,7 +4,7 @@ JavaScript wrapper for accessing the TourCMS API
 
 ## Status
 
-Extremely rough, not suggested for 
+Extremely rough, not suggested for production
 
 ## Dependencies
 
