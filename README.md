@@ -58,7 +58,7 @@ http://www.tourcms.com/support/api/mp/tour_search.php
 // Channel ID
 // Tour Operators set this to their channel ID
 // Agents can set to limit to a specific channel
-// Or pass as 0 to search apll
+// Or pass as 0 to search all
 
 // Search Tours
 tourcms.searchTours({
