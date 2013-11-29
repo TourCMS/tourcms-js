@@ -17,20 +17,20 @@ Currently this repo includes all dependencies:
 
 Include the two js files contained in `lib` 
 
-'''html
+```html
 <script type="text/javascript" src="lib/sha256.js"></script>
 <script type="text/javascript" src="lib/rawurlencode.js"></script>
-'''
+```
 
 Plus the tourcms js file itself
 
-'''html
+```html
 <script type="text/javascript" src="tourcms-0.0.2.js"></script>
-'''
+```
 
 Create a new wrapper
 
-'''js
+```js
 // API Settings
 
 // TourCMS Marketplace ID
@@ -49,12 +49,12 @@ var tourcms = TourcmsApi({
  	"apiKey" : apiKey
 });
  
-'''
+```
 
 Make API calls, passing a callback function. For example a tour search
 http://www.tourcms.com/support/api/mp/tour_search.php
 
-'''js
+```js
 // Channel ID
 // Tour Operators set this to their channel ID
 // Agents can set to limit to a specific channel
@@ -71,4 +71,4 @@ tourcms.searchTours({
 		
 	}
 });
-'''
+```
