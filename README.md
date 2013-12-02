@@ -60,10 +60,12 @@ http://www.tourcms.com/support/api/mp/tour_search.php
 // Agents can set to limit to a specific channel
 // Or pass as 0 to search all
 
+var channelID = 0;
+
 // Search Tours
 tourcms.searchTours({
 	"params" : {
-		"channelId" : 0
+		"channelId" : channelId
 	},
 	"callback" : function(response, err) {
 	
