@@ -74,7 +74,7 @@ this.request = function(a) {
 			
 		}
 	}
-	console.log(params);
+	//console.log(params);
 	// Call the API
 	http.send(params);
 }
