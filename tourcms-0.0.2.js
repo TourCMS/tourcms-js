@@ -6,7 +6,6 @@
 	
 TourcmsApi = function(p) {
 
-	
 this.baseURL = 'https://api.tourcms.com';
 this.marketplaceId = p.marketplaceId;
 this.apiKey = p.apiKey;
