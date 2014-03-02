@@ -44,7 +44,7 @@ var marketplaceId = 0;
 
 // API Key
 // Tour Operators find this in Configuration & Setup > API
-// Agents find this in  
+// Agents find it in your TourCMS control panel
 var apiKey = 'API_KEY_HERE';
  
 // Create a new TourCMS API object
