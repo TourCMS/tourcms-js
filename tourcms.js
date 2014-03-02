@@ -159,79 +159,65 @@ this.request = function(a) {
 	this.listTourImages = function(a) {
 	
 		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		if(typeof a.channelId === "undefined")
+			a.channelId = 0;
 		
 		// Set API path
-		if(a.params.channelId==0) 
-			path = '/p/tours/images/list.xml';
+		if(a.channelId==0) 
+			a.path = '/p/tours/images/list.xml';
 		else 
-			path = '/c/tours/images/list.xml';
+			a.path = '/c/tours/images/list.xml';
 		
 		// Call API
-		this.request({
-						"path" : path,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 			
 	}
 	
 	this.showTour = function(a) {
 		
-		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		// Check required params
+		if(typeof a.channelId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a channelId")) });
 			
-		if(typeof a.params.tourId === "undefined")
-			a.params.tourId = 0;
+		if(typeof a.tourId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a tourId")) });
+		
+		a.path = '/c/tour/show.xml?id=' + a.tourId;
 						
 		// Call API
-		this.request({
-						"path" : '/c/tour/show.xml?id=' + tourId,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});	
+		return this.request(a);	
 					
 	}
 	
 	this.showTourDepartures = function(a) {
 	
-		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		// Check required params
+		if(typeof a.channelId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a channelId")) });
 			
-		if(typeof a.params.tourId === "undefined")
-			a.params.tourId = 0;
-						
+		if(typeof a.tourId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a tourId")) });
+		
+		a.path = '/c/tour/datesprices/dep/show.xml?id=' + a.tourId;
+		
 		// Call API
-		this.request({
-						"path" : '/c/tour/datesprices/dep/show.xml?id=' + tourId,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});	
+		return this.request(a);	
 					
 	}
 	
 	this.showTourFreesale = function(a) {
 		
-		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		// Check required params
+		if(typeof a.channelId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a channelId")) });
 			
-		if(typeof a.params.tourId === "undefined")
-			a.params.tourId = 0;
-						
+		if(typeof a.tourId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a tourId")) });
+	
+		a.path = '/c/tour/datesprices/freesale/show.xml?id=' + a.tourId;
+	
 		// Call API
-		this.request({
-						"path" : '/c/tour/datesprices/freesale/show.xml?id=' + tourId,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 					
 	}
 
