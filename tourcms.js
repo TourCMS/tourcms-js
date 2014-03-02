@@ -57,7 +57,7 @@ this.request = function(a) {
 			if(http.status == 200) {				
 				 resolve(http.response);
 			} else {
-				reject(Error(req.statusText));
+				reject(Error(http.statusText));
 			}
 		}
 		
@@ -226,48 +226,29 @@ this.request = function(a) {
 
 	this.showBooking = function(a) {
 		
-		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		// Check required params
+		if(typeof a.channelId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a channelId")) });
+			
+		if(typeof a.bookingId === "undefined")
+			return new Promise(function(resolve, reject) { reject(Error("Must supply a bookingId")) });
 		
-		if(typeof a.params.bookingId === "undefined")
-			a.params.bookingId = 0;
-		
+		a.path = '/c/booking/show.xml?booking_id=' + a.bookingId;
 		
 		// Call API
-		this.request({
-						"path" : '/c/booking/show.xml?booking_id=' + a.params.bookingId,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 		
 	}
-	
-	/*
-	public function search_voucher($voucher_data = null, $channel = 0) {
-	        
-	                if($voucher_data == null) {
-	                        $voucher_data = new SimpleXMLElement('<voucher />');
-	                        $voucher_data->addChild('barcode_data', '');
-	                }
-	        
-	                if($chanel_id == 0) {
-	                        return($this->request('/p/voucher/search.xml', $channel, 'POST', $voucher_data));
-	                } else {
-	                        return($this->request('/c/voucher/search.xml', $channel, 'POST', $voucher_data));
-	                }
-	        }
-	*/
+
 	
 	this.searchVouchers = function(a) {
 		
 		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		if(typeof a.channelId === "undefined")
+			a.channelId = 0;
 		
-		if(typeof a.params.voucherString === "undefined")
-			a.params.voucherString = '';
+		if(typeof a.voucherString === "undefined")
+			a.voucherString = '';
 			
 		// creates a Document object with root "<report>"
 		var doc = document.implementation.createDocument(null, null, null);
@@ -276,29 +257,28 @@ this.request = function(a) {
 		
 		// create the <barcode_data> node
 		var barcodeData = doc.createElement("barcode_data"), text;
-		var barcodeText = doc.createTextNode(a.params.voucherString);
+		var barcodeText = doc.createTextNode(a.voucherString);
 		
 		// append to document
 		barcodeData.appendChild(barcodeText);
 		voucherData.appendChild(barcodeData);
 		doc.appendChild(voucherData);
-		console.log(voucherData);
+		//console.log(voucherData);
+		
+		a.postData = voucherData;
+		
+		delete a.voucherString;
 		
 		// Set API path
-		if(a.params.channelId==0) 
-			path = '/p/voucher/search.xml';
+		if(a.channelId==0) 
+			a.path = '/p/voucher/search.xml';
 		else 
-			path = '/c/voucher/search.xml';
+			a.path = '/c/voucher/search.xml';
+			
+		a.verb = "POST";
 		
 		// Call API
-		this.request({
-						"path" : path,
-						"channelId" :  a.params.channelId,
-						"verb" : "POST",
-						"postData" : voucherData,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 		
 	}
 
