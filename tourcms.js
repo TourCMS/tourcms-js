@@ -142,22 +142,17 @@ this.request = function(a) {
 	this.listTours = function(a) {
 	
 		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		if(typeof a.channelId === "undefined")
+			a.channelId = 0;
 	
 		// Set API path
-		if(a.params.channelId==0) 
-			path = '/p/tours/list.xml';
+		if(a.channelId==0) 
+			a.path = '/p/tours/list.xml';
 		else 
-			path = '/c/tours/list.xml';
+			a.path = '/c/tours/list.xml';
 		
 		// Call API
-		this.request({
-						"path" : path,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 					
 	}
 	
