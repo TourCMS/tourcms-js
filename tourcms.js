@@ -119,8 +119,9 @@ this.request = function(a) {
 	this.searchTours = function(a) {
 
 		// Sensible defaults
-		qs = '';
-		if(typeof a.params != "undefined")
+		if(typeof a.params === "undefined")
+			qs = '';
+		else
 			qs = this.serialize(a.params)
 		
 		if(typeof a.channelId === "undefined")
