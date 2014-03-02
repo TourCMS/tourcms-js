@@ -13,7 +13,7 @@ Currently this repo includes it's core dependencies:
 * http://phpjs.org/functions/rawurlencode/
 * http://pajhome.org.uk/crypt/md5/sha256.html
 
-Uses promises, see [can i use](http://caniuse.com/promises) and [polyfill](https://github.com/jakearchibald/es6-promise)
+Uses promises (Chrome 32+, FF 27+, Opera 19+) see [can i use](http://caniuse.com/promises) and [polyfill](https://github.com/jakearchibald/es6-promise)
 
 ## Usage
 
