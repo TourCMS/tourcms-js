@@ -11,71 +11,67 @@ this.marketplaceId = p.marketplaceId;
 this.apiKey = p.apiKey;
 		
 // Carry out a request to the TourCMS API
-// path, channelId, callback, verb, postData
 
 this.request = function(a) {
 	
-	// Sensible defaults
-	if(typeof a.channelId == "undefined")
-		a.channelId = 0;
+	return new Promise(function(resolve, reject) {
 	
-	if(typeof a.verb == "undefined")
-		a.verb = 'GET';
-
-	//console.log(a.postData);
-
-	if(typeof a.postData == "undefined") {
-		var params = "";
-	} else {
-		var s = new XMLSerializer();
-		var params = s.serializeToString(a.postData);
-	}
-	
-	// Get the current time
-	var outboundTime = this.time();
-	
-	// Generate the signature
-	var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime);
-	
-	var url = this.baseURL + a.path;
-
-	var http = new XMLHttpRequest();
-	
-	http.open(a.verb, url, true);
-	
-	//Send the proper header information along with the request
-	http.setRequestHeader("Content-type", 'Content-type: text/xml;charset="utf-8"');
-	//http.setRequestHeader("Content-length", params.length);
-	//http.setRequestHeader("Date", gmdate('D, d M Y H:i:s \\G\\M\\T', outboundTime)),
-	http.setRequestHeader("x-tourcms-date", outboundTime);
-	http.setRequestHeader("Authorization", "TourCMS " + a.channelId + ":" + this.marketplaceId + ":" + signature);
-	// http.setRequestHeader("Connection", "close");
-	
-	http.onreadystatechange = function() {
-	
-		if(http.readyState == 4 && http.status == 200  && typeof a.callback != "undefined") {				
-			
-			var text = http.responseText
-			
-			a.callback(
-				text,
-				http.responseXML.documentElement.getElementsByTagName("error")[0].textContent
-				);
-				
-		} else if (http.readyState == 4 && typeof a.callbackError != "undefined") {
+		// Sensible defaults
+		if(typeof a.channelId == "undefined")
+			a.channelId = 0;
 		
-			var text = http.responseText
-			
-			a.callbackError(
-				text,
-				http.responseXML.documentElement.getElementsByTagName("error")[0].textContent
-				);
-			
+		if(typeof a.verb == "undefined")
+			a.verb = 'GET';
+	
+		//console.log(a.postData);
+	
+		if(typeof a.postData == "undefined") {
+			var params = "";
+		} else {
+			var s = new XMLSerializer();
+			var params = s.serializeToString(a.postData);
 		}
-	}
-	//console.log(params);
-	// Call the API
-	http.send(params);
+		
+		// Get the current time
+		var outboundTime = this.time();
+		
+		// Generate the signature
+		var signature = this.generateSignature(a.path, a.channelId, a.verb, outboundTime);
+		
+		var url = this.baseURL + a.path;
+	
+		var http = new XMLHttpRequest();
+		
+		http.open(a.verb, url, true);
+		
+		// Send the proper header information along with the request
+		http.setRequestHeader("Content-type", 'Content-type: text/xml;charset="utf-8"');
+		// http.setRequestHeader("Content-length", params.length);
+		// http.setRequestHeader("Date", gmdate('D, d M Y H:i:s \\G\\M\\T', outboundTime)),
+		http.setRequestHeader("x-tourcms-date", outboundTime);
+		http.setRequestHeader("Authorization", "TourCMS " + a.channelId + ":" + this.marketplaceId + ":" + signature);
+		// http.setRequestHeader("Connection", "close");
+		
+		http.onload = function() {
+		
+			if(http.status == 200) {				
+				 resolve(http.response);
+			} else {
+				reject(Error(req.statusText));
+			}
+		}
+		
+		// Handle network errors
+		http.onerror = function() {
+		
+		      reject(Error("Network Error"));
+		
+		};
+		
+		//console.log(params);
+		// Call the API
+		http.send(params);
+	});
 }
 
 // API Methods
@@ -84,43 +80,38 @@ this.request = function(a) {
 	this.apiRateLimitStatus = function(a) {
 	
 		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
-			
+		if(typeof a.channelId === "undefined")
+			a.channelId = 0;
+	
+		a.path = '/api/rate_limit_status.xml';
+	
 		// Call API
-		this.request({
-						"path" : '/api/rate_limit_status.xml',
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 	}
 
 // Channel methods
-	this.listChannels = function(a) {
-	
+	this.listChannels = function() {
+		
 		// Call API
-		this.request({
-						"path" : '/p/channels/list.xml',
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request({ path: '/p/channels/list.xml' });
 					
 	}
 	
 	this.showChannel = function(a) {
 		
-		// Sensible defaults
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
-			
+		if(arguments.length < 1) {
+			var a = { channelId : 0 }
+		} else {
+			var a = arguments[0];
+			// Sensible defaults
+			if(typeof a.channelId === "undefined")
+				a.channelId = 0;
+		}
+		
+		a.path = '/c/channel/show.xml';
+		
 		// Call API
-		this.request({
-						"path" : '/c/channel/show.xml',
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 					
 	}
 	
