@@ -15,7 +15,7 @@ Currently this repo includes it's core dependencies:
 
 Uses promises (Chrome 32+, FF 27+, Opera 19+) see [can i use](http://caniuse.com/promises) and [polyfill](https://github.com/jakearchibald/es6-promise)
 
-As the TourCMS API does not support CORS this library will only function when same origin policy is not in place, for example Phonegap applications or chrome run with `--disable-web-security`.
+As the TourCMS API does not support CORS this library will only function when same origin policy is not in place, for example Phonegap applications or Chrome run with `--disable-web-security`.
 
 ## Usage
 
