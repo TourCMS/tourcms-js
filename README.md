@@ -4,14 +4,16 @@ JavaScript wrapper for accessing the TourCMS API
 
 ## Status
 
-Extremely rough, not suggested for production
+Early, not suggested for production
 
 ## Dependencies
 
-Currently this repo includes all dependencies:
+Currently this repo includes it's core dependencies:
 
 * http://phpjs.org/functions/rawurlencode/
 * http://pajhome.org.uk/crypt/md5/sha256.html
+
+Uses promises, see [can i use](http://caniuse.com/promises) and [polyfill](https://github.com/jakearchibald/es6-promise)
 
 ## Usage
 
@@ -25,7 +27,7 @@ Include the two js files contained in `lib`
 Plus the tourcms js file itself
 
 ```html
-<script type="text/javascript" src="tourcms-0.0.2.js"></script>
+<script type="text/javascript" src="tourcms.js"></script>
 ```
 
 Create a new wrapper
@@ -51,7 +53,7 @@ var tourcms = TourcmsApi({
  
 ```
 
-Make API calls, passing a callback function. For example a tour search
+Make API calls
 http://www.tourcms.com/support/api/mp/tour_search.php
 
 ```js
@@ -63,14 +65,14 @@ http://www.tourcms.com/support/api/mp/tour_search.php
 var channelID = 0;
 
 // Search Tours
-tourcms.searchTours({
-	"params" : {
-		"channelId" : channelId
-	},
-	"callback" : function(response, err) {
-	
-		console.log(response);		
-		
-	}
+TourCMS.searchTours({
+			channelId : 3930,
+			params : {
+				k : 'rafting'
+			}
+			}).then(function(response) {
+  console.log("Success!", response);
+}, function(error) {
+  console.error("Failed!", error);
 });
 ```
