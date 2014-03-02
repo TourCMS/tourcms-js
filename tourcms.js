@@ -119,25 +119,21 @@ this.request = function(a) {
 	this.searchTours = function(a) {
 
 		// Sensible defaults
-		if(typeof a.params.qs === "undefined")
-			a.params.qs = "";
+		qs = '';
+		if(typeof a.params != "undefined")
+			qs = this.serialize(a.params)
 		
-		if(typeof a.params.channelId === "undefined")
-			a.params.channelId = 0;
+		if(typeof a.channelId === "undefined")
+			a.channelId = 0;
 	
 		// Set API path
-		if(a.params.channelId==0) 
-			path = '/p/tours/search.xml?' + a.params.qs;
+		if(a.channelId==0) 
+			a.path = '/p/tours/search.xml?' + qs;
 		else 
-			path = '/c/tours/search.xml?' + a.params.qs;
+			a.path = '/c/tours/search.xml?' + qs;
 		
 		// Call API
-		this.request({
-						"path" : path,
-						"channelId" :  a.params.channelId,
-						"callback" : a.callback,
-						"callbackError" : a.callbackError
-					});
+		return this.request(a);
 			
 	}
 
@@ -350,6 +346,15 @@ this.parseXml = function(text) {
 		xmlDoc.loadXML(text);
 	}
 	return xmlDoc;
+}
+
+this.serialize = function(obj) {
+  var str = [];
+  for(var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
 }
 
 // Helper for XML to JSON
