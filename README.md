@@ -25,7 +25,7 @@ Include the two js files contained in `lib`
 Plus the tourcms js file itself
 
 ```html
-<script type="text/javascript" src="tourcms-0.0.2.js"></script>
+<script type="text/javascript" src="tourcms.js"></script>
 ```
 
 Create a new wrapper
@@ -42,11 +42,18 @@ var marketplaceId = 0;
 // Tour Operators find this in Configuration & Setup > API
 // Agents find this in  
 var apiKey = 'API_KEY_HERE';
+
+// API Base Url
+// By default the base URL will point to TourCMS main production environment. 
+// Using this variable will override this to point at another base URL, intended for testing purposes.
+var baseURL = 'http://tester-api.tourcms.com';
  
 // Create a new TourCMS API object
 var tourcms = TourcmsApi({
 	"marketplaceId" : marketplaceId, 
- 	"apiKey" : apiKey
+ 	"apiKey" : apiKey,
+	// Optional
+	"baseURL" : baseURL
 });
  
 ```
