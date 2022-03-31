@@ -3,6 +3,7 @@
 // Constructor Params:
 //		p.marketeplaceId Integer Marketplace ID
 //		p.apiKey String API Private Key
+//		p.baseURL String API Base URL
 
 TourcmsApi = function (p) {
 
