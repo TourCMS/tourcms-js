@@ -665,6 +665,65 @@ TourcmsApi = function (p) {
 
 	}
 
+	this.getTourFacets = function (a) {
+		// Sensible defaults
+		if (typeof a.params.channelId === "undefined")
+			a.params.channelId = 0;
+
+		// Set API path
+		path = '/api/tours/importer/get_tour_facets.xml';
+
+		// Call API
+		this.request({
+			"path": path,
+			"channelId": a.params.channelId,
+			"callback": a.callback,
+			"callbackError": a.callbackError
+		});
+	}
+
+	this.getListTours = function (a) {
+		// Sensible defaults
+		if (typeof a.params.channelId === "undefined")
+			a.params.channelId = 0;
+
+		if (typeof a.params.qs === "undefined")
+			a.params.qs = "";
+
+		// Set API path
+		path = '/api/tours/importer/get_tour_list.xml?'+a.params.qs;
+
+		// Call API
+		this.request({
+			"path": path,
+			"channelId": a.params.channelId,
+			"callback": a.callback,
+			"callbackError": a.callbackError
+		});
+	}
+
+	this.getImportToursStatus = function (a) {
+		// Sensible defaults
+		if (typeof a.params.channelId === "undefined")
+			a.params.channelId = 0;
+
+		if (typeof a.params.qs === "undefined")
+			a.params.qs = "";
+
+		// Set API path
+		path = '/api/tours/importer/get_import_tours_status.xml';
+
+		// Call API
+		this.request({
+			"path": path,
+			"channelId": a.params.channelId,
+			"verb": "POST",
+			"postData": a.params.postData,
+			"callback": a.callback,
+			"callbackError": a.callbackError
+		});
+	}
+
 	// Generate the signature required to sign API calls
 	this.generateSignature = function (path, channelId, verb, outboundTime) {
 		var stringToSign = channelId + "/" + this.marketplaceId + "/" + verb + "/" + outboundTime + path;
