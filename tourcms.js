@@ -244,10 +244,11 @@ export default class TourCMS {
     // Tours Methods
 
     searchTours(channel = 0, params = '') {
+        params = this.validateParams(params)
         if (channel == 0) {
-            return this.request(TourCMS.P_TOURS_SEARCH, channel, params)
+            return this.request(TourCMS.P_TOURS_SEARCH + params, channel)
         } else {
-            return this.request(TourCMS.C_TOURS_SEARCH, channel, params)
+            return this.request(TourCMS.C_TOURS_SEARCH + params, channel)
         }
     }
 
@@ -325,7 +326,7 @@ export default class TourCMS {
         if (channel == 0)
             return (this.request(TourCMS.P_TOURS_LOCATIONS + params));
         else
-            return (this.request(TourCMS.C_TOURS_LOCATIONS.params, channel));
+            return (this.request(TourCMS.C_TOURS_LOCATIONS + params, channel));
 
     }
 
@@ -579,7 +580,9 @@ export default class TourCMS {
     }
 
     startNewAgentLogin(params, channel) {
-        return (this.request(TourCMS.C_START_AGENT_LOGIN, channel, TourCMS.HTTP_VERB_POST, params));
+        params = this.validateParams(params)
+        let endpoint = TourCMS.C_START_AGENT_LOGIN + params
+        return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
     retrieveAgentBookingKey(privateToken, channel) {
