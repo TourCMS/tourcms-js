@@ -173,13 +173,7 @@ export default class TourCMS {
         verb = verb ?? TourCMS.HTTP_VERB_GET
 
         let endpoint = this.baseURL + path
-
         let outboundTime = this.time()
-        console.info(endpoint)
-        console.info(channelId)
-        console.info(verb)
-        console.info(outboundTime)
-        console.info(this.APIKey)
         let signature = this.generateSignature(path, channelId, verb, outboundTime)
 
         if (postData) {
@@ -496,10 +490,8 @@ export default class TourCMS {
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
-    cancelBooking(channel, bookingId, note) {
-        let xmlString = "<booking><booking_id>" + bookingId + "</booking_id><note>" + note + "</note></booking>";
-        let postData = this.parseXml(xmlString);
-        return this.request(TourCMS.C_BOOKING_CANCEL, channel, TourCMS.HTTP_VERB_POST, postData);
+    cancelBooking(bookingData, channel) {
+        return this.request(TourCMS.C_BOOKING_CANCEL, channel, TourCMS.HTTP_VERB_POST, bookingData);
     }
 
     deleteBooking(booking, channel) {
@@ -749,7 +741,7 @@ export default class TourCMS {
         return Math.floor(new Date().getTime() / 1000)
     }
 
-    parseXml(text) {
+    parseXML(text) {
         let xmlDoc = ''
         if (window.DOMParser) {
             let parser = new DOMParser()
@@ -762,7 +754,7 @@ export default class TourCMS {
         return xmlDoc
     }
 
-    xmlToJson(xml) {
+    XMLToJson(xml) {
         let attr,
             child,
             attrs = xml.attributes,
@@ -792,6 +784,12 @@ export default class TourCMS {
             }
         }
         return obj
+    }
+
+    XMLStringToJson(XMLString)
+    {
+        let xml = this.parseXML(XMLString)
+        return this.XMLToJson(xml)
     }
 
     setLastResponseHeaders(headers) {
