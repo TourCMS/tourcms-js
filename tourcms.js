@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { rawurlencode } from '../lib/rawurlencode'
 import { b64_hmac_sha256 } from '../lib/sha256'
+import X2JS from 'x2js'
 
 export default class TourCMS {
 
@@ -148,6 +149,7 @@ export default class TourCMS {
     APIKey = ''
     lastResponseHeaders = []
     userAgent = 'TourCMS JS Wrapper v2.0.0'
+    x2js = null
 
     constructor(marketplaceId, APIKey) {
 
@@ -160,6 +162,7 @@ export default class TourCMS {
                 'Content-Type': 'application/xml'
             }
         })
+        this.x2js = new X2JS();
     }
 
     setBaseURL(baseURL)
@@ -294,7 +297,7 @@ export default class TourCMS {
     updateTourUrl(tour, channel, tourUrl) {
 
         let xmlString = "<tour><tour_id>" + tour + "</tour_id><tour_url>" + tourUrl + "</tour_url></tour>";
-        let postData = this.parseXml(xmlString);
+        let postData = this.parseXML(xmlString);
 
         return (this.updateTour(postData, channel));
     }
@@ -419,7 +422,7 @@ export default class TourCMS {
 
     commitBooking(channel, bookingId) {
         let xmlString = "<booking><booking_id>" + bookingId + "</booking_id></booking>";
-        let postData = this.parseXml(xmlString);
+        let postData = this.parseXML(xmlString);
         return this.request(TourCMS.C_BOOKING_COMMIT, channel, TourCMS.HTTP_VERB_POST, postData);
     }
 
@@ -458,7 +461,7 @@ export default class TourCMS {
         if (!voucherData) {
             voucherData = '<voucher><barcode_data></barcode_data></voucher>'
         }
-        let postData = this.parseXml(voucherData)
+        let postData = this.parseXML(voucherData)
 
         if (channel == 0) {
             return (this.request(TourCMS.P_VOUCHER_SEARCH, channel, TourCMS.HTTP_VERB_POST, postData));
@@ -518,7 +521,7 @@ export default class TourCMS {
 
     addNoteToBooking(booking, channel, text, type) {
         let xmlString = "<booking><booking_id>"+booking+"</booking_id><note><text>"+text+"</text><type>"+type+"</type></note></booking>";
-        let postData = this.parseXml(xmlString);
+        let postData = this.parseXML(xmlString);
         return (this.request(TourCMS.C_BOOKING_NOTE_NEW, channel, TourCMS.HTTP_VERB_POST, postData));
     }
 
@@ -719,9 +722,7 @@ export default class TourCMS {
 
     generateSignature(path, channelId, verb, outboundTime) {
         let stringToSign = channelId + '/' + this.marketplaceId + '/' + verb + '/' + outboundTime + path
-        console.log(stringToSign)
         let signature = rawurlencode(b64_hmac_sha256(this.APIKey, stringToSign) + '=')
-
         return signature
     }
 
@@ -754,36 +755,14 @@ export default class TourCMS {
         return xmlDoc
     }
 
-    XMLToJson(xml) {
-        let attr,
-            child,
-            attrs = xml.attributes,
-            children = xml.childNodes,
-            key = xml.nodeType,
-            obj = {},
-            i = -1
+    XMLToJson(xml)
+    {
+        return this.x2js.xml2js(xml);
+    }
 
-        if (key == 1 && attrs.length) {
-            obj[(key = '@attributes')] = {}
-            while ((attr = attrs.item(++i))) {
-                obj[key][attr.nodeName] = attr.nodeValue
-            }
-            i = -1
-        } else if (key == 3) {
-            obj = xml.nodeValue
-        }
-        while ((child = children.item(++i))) {
-            key = child.nodeName
-            if (obj.hasOwnProperty(key)) {
-                if (obj.toString.call(obj[key]) != '[object Array]') {
-                    obj[key] = [obj[key]]
-                }
-                obj[key].push(this.xmlToJson(child))
-            } else {
-                obj[key] = this.xmlToJson(child)
-            }
-        }
-        return obj
+    JSONToXML(json)
+    {
+        return this.x2js.js2xml(json);
     }
 
     XMLStringToJson(XMLString)
