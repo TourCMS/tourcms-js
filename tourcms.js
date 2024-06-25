@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { rawurlencode } from '../lib/rawurlencode'
-import { b64_hmac_sha256 } from '../lib/sha256'
+import { rawurlencode } from './lib/rawurlencode'
+import { b64_hmac_sha256 } from './lib/sha256'
 import X2JS from 'x2js'
 
 export default class TourCMS {
