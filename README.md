@@ -4,31 +4,29 @@ JavaScript wrapper for accessing the TourCMS API
 
 ## Status
 
-Extremely rough, not suggested for production
+Currently in beta version
 
 ## Dependencies
+If you use this wrapper installing it from npm, all dependencies will be installed automatically and wrapper would be ready to work with
 
-Currently this repo includes all dependencies:
+#### Development
+Currently, for development purposes this repo includes next dependencies:
 
 * http://phpjs.org/functions/rawurlencode/
 * http://pajhome.org.uk/crypt/md5/sha256.html
 
+Apart from that you need to execute `npm install` to install the rest of dependencies
+
 ## Usage
 
-Include the two js files contained in `lib` 
+Just import TourCMS wrapper class 
 
-```html
-<script type="text/javascript" src="lib/sha256.js"></script>
-<script type="text/javascript" src="lib/rawurlencode.js"></script>
+
+```js
+import TourCMS from 'tourcms'
 ```
 
-Plus the tourcms js file itself
-
-```html
-<script type="text/javascript" src="tourcms.js"></script>
-```
-
-Create a new wrapper
+After, create a new object, and start working with it
 
 ```js
 // API Settings
@@ -54,8 +52,8 @@ tourcms.setBaseURL(baseURL)
 
 ```
 
-Make API calls, passing a callback function. For example a tour search
-http://www.tourcms.com/support/api/mp/tour_search.php
+Make API calls, managing response from API. For example a tour search
+https://www.tourcms.com/support/api/mp/tour_search.php
 
 ```js
 // Channel ID
@@ -66,10 +64,23 @@ http://www.tourcms.com/support/api/mp/tour_search.php
 let channelID = 3930;
 
 // Search Tours
-tourcms.searchTours(channelID);
-
+let promise = tourcms.searchTours(channelID);
 ```
-
-
 TourCMS wrapper will always return the JS Promise with the request to API, that way
 you can manage it in the way you want
+
+```js
+
+promise
+.then((response) => {
+    // Data will contain TourCMS response(XML) as string
+    let data = response.data;
+})
+.catch((error) => {
+    // In case of any error, you can access it
+    console.log(error)
+})
+.finally(() => {
+    // Tasks to be executed no matter if successfull or error
+})
+```
