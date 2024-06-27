@@ -1,7 +1,7 @@
 import axios from 'axios'
 import rawurlencode from 'rawurlencode'
-import { b64_hmac_sha256 } from './lib/sha256'
 import X2JS from 'x2js'
+import { HmacMD5, HmacSHA1, HmacSHA256, HmacSHA3, HmacSHA512 } from 'crypto-js'
 
 export default class TourCMS {
 
@@ -143,6 +143,13 @@ export default class TourCMS {
     static C_SUPPLIER_SHOW = '/c/supplier/show.xml'
     static C_STAFF_LIST = '/c/staff/list.xml'
 
+    // HMAC
+    static HMAC_MD5 = 'MD5'
+    static HMAC_SHA1 = 'SHA1'
+    static HMAC_SHA3 = 'SHA3'
+    static HMAC_SHA256 = 'SHA256'
+    static HMAC_SHA512 = 'SHA512'
+        
     axios
     baseURL = ''
     marketplaceId = ''
@@ -721,8 +728,10 @@ export default class TourCMS {
     // Auxiliary method
 
     generateSignature(path, channelId, verb, outboundTime) {
+
         let stringToSign = channelId + '/' + this.marketplaceId + '/' + verb + '/' + outboundTime + path
-        let signature = rawurlencode(b64_hmac_sha256(this.APIKey, stringToSign) + '=')
+        let signature = rawurlencode(Base64.stringify(HmacSHA256(stringToSign, this.APIKey)));
+
         return signature
     }
 
@@ -806,13 +815,38 @@ export default class TourCMS {
 
         let stringToHash = values.join("|");
 
-        let hash = this.gethash(algorithm, stringToHash);
+        let hash = this.getHash(algorithm, stringToHash);
 
         return hash;
 
     }
 
-    gethash(algorithm, stringToHash) {
-        return hash_hmac(algorithm, stringToHash, this.APIKey, false);
+    getHash(algorithm, stringToHash, key=null) {
+
+        let hash = "";
+        key = key ?? this.APIKey;
+
+        switch (algorithm) {
+            case TourCMS.HMAC_MD5:
+                hash = HmacMD5(stringToHash, key)
+                break;
+            case TourCMS.HMAC_SHA1:
+                hash = HmacSHA1(stringToHash, key)
+                break;
+            case TourCMS.HMAC_SHA3:
+                hash = HmacSHA3(stringToHash, key)
+                break;
+            case TourCMS.HMAC_SHA256:
+                hash = HmacSHA256(stringToHash, key)
+                break;
+            case TourCMS.HMAC_SHA512:
+                hash = HmacSHA512(stringToHash, key)
+                break;
+            default:
+                hash = HmacSHA256(stringToHash, key)
+                break;
+        }
+
+        return hash;
     }
 }
