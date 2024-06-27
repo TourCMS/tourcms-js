@@ -10,12 +10,7 @@ Currently in beta version
 If you use this wrapper installing it from npm, all dependencies will be installed automatically and wrapper would be ready to work with
 
 #### Development
-Currently, for development purposes this repo includes next dependencies:
-
-* http://phpjs.org/functions/rawurlencode/
-* http://pajhome.org.uk/crypt/md5/sha256.html
-
-Apart from that you need to execute `npm install` to install the rest of dependencies
+Currently, for development purposes you need to execute `npm install` to install the dependencies
 
 ## Usage
 
