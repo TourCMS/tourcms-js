@@ -257,7 +257,7 @@ export default class TourCMS {
         }
     }
 
-    searchHotelsRange(params = '', tour = '', channel = 0) {
+    searchHotelsRange(channel = 0, tour = '', params = '') {
 
         params = this.validateParams(params);
 
@@ -276,7 +276,7 @@ export default class TourCMS {
             return (this.request(TourCMS.P_HOTELS_SEARCH_RANGE + params, channel));
     }
 
-    searchHotelsSpecific(params = '', tour = '', channel = 0) {
+    searchHotelsSpecific(channel = 0, tour = '', params = '') {
         params = this.validateParams(params);
 
         if (tour) {
@@ -298,11 +298,11 @@ export default class TourCMS {
         return (this.request(TourCMS.C_TOURS_FILTERS, channel));
     }
 
-    updateTour(tourData, channel) {
+    updateTour(channel, tourData) {
         return (this.request(TourCMS.C_TOUR_UPDATE, channel, TourCMS.HTTP_VERB_POST, tourData));
     }
 
-    updateTourUrl(tour, channel, tourUrl) {
+    updateTourUrl(channel, tour, tourUrl) {
 
         let xmlString = "<tour><tour_id>" + tour + "</tour_id><tour_url>" + tourUrl + "</tour_url></tour>";
         let postData = this.parseXML(xmlString);
@@ -335,18 +335,20 @@ export default class TourCMS {
 
     }
 
-    deletetour(tour, channel) {
+    deletetour(channel, tour) {
         let endpoint = this.TOUR_DELETE + '?id=' + tour;
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
-    showTour(channel, tourId, params) {
-        if (params) params = "&" + params
-        let endpoint = TourCMS.C_TOUR_SHOW + '?id=' + tourId + params
+    showTour(channel, tour, params = '') {
+        let endpoint = TourCMS.C_TOUR_SHOW + '?id=' + tour
+        if (params) {
+            endpoint += "&" + params
+        }
         return this.request(endpoint, channel)
     }
 
-    tourUploadFileGetUrl(tour, channel, fileType, fileId) {
+    tourUploadFileGetUrl(channel, tour, fileType, fileId) {
         let endpoint = TourCMS.C_TOURS_FILES_UPLOAD_GET_URL + '?id=' + tour + '&file_type=' + fileType + '&file_id=' + fileId
         return this.request(endpoint, channel)
     }
@@ -363,49 +365,54 @@ export default class TourCMS {
         return this.request(TourCMS.C_TOUUR_DOCUMENT_DELETE, channel, TourCMS.HTTP_VERB_POST, documentXml)
     }
 
-    checkTourAvailability(channel, tourId, params) {
-        let fullparams = '?id=' + tourId + "&" + params
-        let endpoint = TourCMS.C_TOUR_CHECKAVAIL + fullparams
+    checkTourAvailability(channel, tourId, params = '') {
+        let endpoint = TourCMS.C_TOUR_CHECKAVAIL + '?id=' + tourId
+        if (params) {
+            endpoint += "&" + params
+        }
         return this.request(endpoint, channel)
     }
 
-    showTourDatesAndDeals(tour, channel, qs = '') {
-        if (qs) qs = "&".qs;
-        let endpoint = TourCMS.C_TOUR_DATESPRICES_SEARCH + '?id=' + tour + qs
+    showTourDatesAndDeals(channel, tour, params = '') {
+        if (params) params = "&".params;
+        let endpoint = TourCMS.C_TOUR_DATESPRICES_SEARCH + '?id=' + tour + params
         return this.request(endpoint, channel)
     }
 
-    showTourDepartures(tour, channel, qs = '') {
-        if (qs) qs = "&".qs;
-        return this.request(TourCMS.C_TOUR_DATESPRICES_DEPARTURES_SHOW + '?id=' + tour + qs, channel)
+    showTourDepartures(channel, tour, params = '') {
+        if (params) params = "&".params;
+        return this.request(TourCMS.C_TOUR_DATESPRICES_DEPARTURES_SHOW + '?id=' + tour + params, channel)
     }
 
-    showTourFreesale(tour, channel) {
+    showTourFreesale(channel, tour) {
         return this.request(TourCMS.C_TOUR_DATESPRICES_FREESALE_SHOW + '?id=' + tour, channel)
     }
 
     // Raw departure methods
 
 
-    searchRawDepartures(tour, channel, params = '') {
-        let endpoint = TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_SEARCH + '?id=' + tour + params
+    searchRawDepartures(channel, tour, params = '') {
+        let endpoint = TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_SEARCH + '?id=' + tour
+        if (params) {
+            endpoint += params
+        }
         return (this.request(endpoint, channel));
     }
 
-    showDeparture(departure, tour, channel) {
+    showDeparture(channel, tour, departure) {
         let endpoint = TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_SHOW + '?id=' + tour + '&departure_id=' + departure
         return this.request(endpoint, channel)
     }
 
-    createDeparture(departureData, channel) {
+    createDeparture(channel, departureData) {
         return this.request(TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_NEW, channel, TourCMS.HTTP_VERB_POST, departureData)
     }
 
-    updateDeparture(departureData, channel) {
+    updateDeparture(channel, departureData) {
         return this.request(TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_UPDATE, channel, TourCMS.HTTP_VERB_POST, departureData)
     }
 
-    deleteDeparture(departure, tour, channel) {
+    deleteDeparture(channel, tour, departure) {
         let endpoint = TourCMS.C_TOUR_DATESPRICES_DEPARTURES_MANAGE_DELETE + '?id=' + tour + '&departure_id=' + departure
         return this.request(endpoint, channel, TourCMS.HTTP_VERB_POST)
     }
@@ -420,11 +427,11 @@ export default class TourCMS {
 
     // Bookings methods
 
-    getBookingRedirectUrl(urlData, channel) {
+    getBookingRedirectUrl(channel, urlData) {
         return this.request(TourCMS.C_BOOKING_NEW_REDIRECT_URL, channel, TourCMS.HTTP_VERB_POST, urlData)
     }
 
-    startNewBooking(bookingData, channel) {
+    startNewBooking(channel, bookingData) {
         return this.request(TourCMS.C_START_NEW_BOOKING, channel, TourCMS.HTTP_VERB_POST, bookingData)
     }
 
@@ -437,7 +444,7 @@ export default class TourCMS {
 
     // Retrieving bookings
 
-    searchBookings(params = '', channel = 0) {
+    searchBookings(channel = 0, params = '') {
         params = this.validateParams(params);
         if (channel == 0)
             return (this.request(TourCMS.P_BOOKING_SEARCH + params));
@@ -458,13 +465,15 @@ export default class TourCMS {
 
     }
 
-    showBooking(channel, bookingId, params) {
-        let fullparams = '?booking_id=' + bookingId + '&' + params
-        let endpoint = TourCMS.C_BOOKING_SHOW + fullparams
+    showBooking(channel, bookingId, params = '') {
+        let endpoint = TourCMS.C_BOOKING_SHOW + '?booking_id=' + bookingId
+        if (params) {
+            endpoint += '&' + params
+        }
         return this.request(endpoint, channel)
     }
 
-    searchVoucher(voucherData = null, channel = 0) {
+    searchVoucher(channel = 0, voucherData = null) {
 
         if (!voucherData) {
             voucherData = '<voucher><barcode_data></barcode_data></voucher>'
@@ -480,54 +489,54 @@ export default class TourCMS {
 
     // Updating bookings
 
-    updateBooking(bookingData, channel) {
+    updateBooking(channel, bookingData) {
         return (this.request(TourCMS.C_BOOKING_UPDATE, channel, TourCMS.HTTP_VERB_POST, bookingData));
     }
 
-    createPayment(paymentData, channel) {
+    createPayment(channel, paymentData) {
         return (this.request(TourCMS.C_BOOKING_PAYMENT_NEW, channel, TourCMS.HTTP_VERB_POST, paymentData));
     }
 
-    logFailedPayment(paymentData, channel) {
+    logFailedPayment(channel, paymentData) {
         return (this.request(TourCMS.C_BOOKING_PAYMENT_FAIL, channel, TourCMS.HTTP_VERB_POST, paymentData));
     }
 
-    spreedlyCreatePayment(paymentData, channel) {
+    spreedlyCreatePayment(channel, paymentData) {
         return (this.request(TourCMS.C_BOOKING_PAYMENT_SPREEDLY_NEW, channel, TourCMS.HTTP_VERB_POST, paymentData));
     }
 
-    spreedlyCompletePayment(transactionId, channel) {
+    spreedlyCompletePayment(channel, transactionId) {
         let endpoint = TourCMS.C_BOOKING_PAYMENT_SPREEDLY_COMPLETE + '?id=' + transactionId
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
-    cancelBooking(bookingData, channel) {
+    cancelBooking(channel, bookingData) {
         return this.request(TourCMS.C_BOOKING_CANCEL, channel, TourCMS.HTTP_VERB_POST, bookingData);
     }
 
-    deleteBooking(booking, channel) {
+    deleteBooking(channel, booking) {
         let endpoint = TourCMS.C_BOOKING_DELETE + '?booking_id=' + booking
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
-    checkOptionAvailability(booking, tourComponentId, channel) {
+    checkOptionAvailability(channel, booking, tourComponentId) {
         let endpoint = TourCMS.C_BOOKING_OPTIONS_CHECKAVAIL + '?booking_id=' + booking + '&tour_component_id=' + tourComponentId
         return (this.request(endpoint , channel));
     }
 
-    bookingAddComponent(componentData, channel) {
+    bookingAddComponent(channel, componentData) {
         return (this.request(TourCMS.C_BOOKING_COMPONENT_NEW, channel, TourCMS.HTTP_VERB_POST, componentData));
     }
 
-    bookingUpdateComponent(componentData, channel) {
+    bookingUpdateComponent(channel, componentData) {
         return (this.request(TourCMS.C_BOOKING_COMPONENT_UPDATE, channel, TourCMS.HTTP_VERB_POST, componentData));
     }
 
-    bookingRemoveComponent(componentData, channel) {
+    bookingRemoveComponent(channel, componentData) {
         return (this.request(TourCMS.C_BOOKING_COMPONENT_DELETE, channel, TourCMS.HTTP_VERB_POST, componentData));
     }
 
-    addNoteToBooking(booking, channel, text, type) {
+    addNoteToBooking(channel, booking, text, type) {
         let xmlString = "<booking><booking_id>"+booking+"</booking_id><note><text>"+text+"</text><type>"+type+"</type></note></booking>";
         let postData = this.parseXML(xmlString);
         return (this.request(TourCMS.C_BOOKING_NOTE_NEW, channel, TourCMS.HTTP_VERB_POST, postData));
@@ -537,21 +546,21 @@ export default class TourCMS {
         return this.request(TourCMS.C_BOOKING_SEND_EMAIL, channel, TourCMS.HTTP_VERB_POST, postData)
     }
 
-    redeemVoucher(voucherData, channel = 0) {
+    redeemVoucher(channel = 0, voucherData) {
         return (this.request(TourCMS.C_VOUCHER_REEDEM, channel, TourCMS.HTTP_VERB_POST, voucherData));
     }
 
     // Enquiry and customer methods
 
-    createEnquiry(enquiryData, channel) {
+    createEnquiry(channel, enquiryData) {
         return (this.request(TourCMS.C_ENQUIRY_NEW, channel, TourCMS.HTTP_VERB_POST, enquiryData));
     }
 
-    updateCustomer(customerData, channel) {
+    updateCustomer(channel, customerData) {
         return (this.request(TourCMS.C_CUSTOMER_UPDATE, channel, TourCMS.HTTP_VERB_POST, customerData));
     }
 
-    searchEnquiries(params = '', channel = 0) {
+    searchEnquiries(channel = 0, params = '') {
         params = this.validateParams(params);
         if (channel == 0)
             return (this.request(TourCMS.P_ENQUIRIES_SEARCH + params));
@@ -559,16 +568,16 @@ export default class TourCMS {
             return (this.request(TourCMS.C_ENQUIRIES_SEARCH + params, channel));
     }
 
-    showEnquiry(enquiry, channel) {
+    showEnquiry(channel, enquiry) {
         return (this.request(TourCMS.C_ENQUIRY_SHOW + '?enquiry_id=' + enquiry, channel));
     }
 
-    showCustomer(customer, channel) {
+    showCustomer(channel, customer) {
         let endpoint = TourCMS.C_CUSTOMER_SHOW + '?customer_id=' + customer;
         return (this.request(endpoint, channel));
     }
 
-    checkCustomerLogin(customer, password, channel) {
+    checkCustomerLogin(channel, customer, password) {
         let endpoint = TourCMS.C_CUSTOMER_LOGIN_SEARCH + '?customer_username=' + customer + '&customer_password=' + password;
         return (this.request(endpoint, channel));
     }
@@ -582,29 +591,29 @@ export default class TourCMS {
         }
     }
 
-    startNewAgentLogin(params, channel) {
+    startNewAgentLogin(channel, params) {
         params = this.validateParams(params)
         let endpoint = TourCMS.C_START_AGENT_LOGIN + params
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
-    retrieveAgentBookingKey(privateToken, channel) {
+    retrieveAgentBookingKey(channel, privateToken) {
         let endpoint = TourCMS.C_RETRIEVE_AGENT_BOOKING_KEY + '?k=' + privateToken;
         return (this.request(endpoint, channel));
     }
 
-    updateAgent(update_data, channel) {
-        return (this.request(TourCMS.C_AGENTS_UPDATE, channel, TourCMS.HTTP_VERB_POST, update_data));
+    updateAgent(channel, agentData) {
+        return (this.request(TourCMS.C_AGENTS_UPDATE, channel, TourCMS.HTTP_VERB_POST, agentData));
     }
 
     // Payments
-    listPayments(params, channel) {
+    listPayments(channel, params) {
         params = this.validateParams(params);
         let endpoint = TourCMS.C_BOOKING_PAYMENT_LIST + params
         return (this.request(endpoint, channel));
     }
 
-    payworksBookingPaymentNew(payment, channel) {
+    payworksBookingPaymentNew(channel, payment) {
         return (this.request(TourCMS.C_BOOKING_PAYMENT_PAYWORKS_NEW, channel, TourCMS.HTTP_VERB_POST, payment));
     }
 
@@ -614,48 +623,48 @@ export default class TourCMS {
     }
 
     // Internal supplier methods
-    showSupplier(supplier, channel) {
+    showSupplier(channel, supplier) {
         let endpoint = TourCMS.C_SUPPLIER_SHOW + '?supplier_id=' + supplier;
         return (this.request(endpoint, channel));
     }
 
     // CRUD Pickup points
-    listPickups(params, channel) {
+    listPickups(channel, params) {
         params = this.validateParams(params);
         let endpoint = TourCMS.C_PICKUPS_LIST + params
         return (this.request(endpoint, channel));
     }
 
-    createPickup(pickupData, channel) {
+    createPickup(channel, pickupData) {
         return (this.request(TourCMS.C_PICKUPS_NEW, channel, TourCMS.HTTP_VERB_POST, pickupData));
     }
 
-    updatePickup(pickupData, channel) {
+    updatePickup(channel, pickupData) {
         return (this.request(TourCMS.C_PICKUPS_UPDATE, channel, TourCMS.HTTP_VERB_POST, pickupData));
     }
 
-    deletePickup(pickupData, channel) {
+    deletePickup(channel, pickupData) {
         return (this.request(TourCMS.C_PICKUPS_DELETE, channel, TourCMS.HTTP_VERB_POST, pickupData));
     }
 
-    showToursPickupRoutes(tour, channel) {
+    showToursPickupRoutes(channel, tour) {
         let endpoint = TourCMS.TOUR_PICKUP_ROUTES_SHOW + '?id=' + tour
         return this.request(endpoint, channel);
     }
 
-    updateToursPickupRoutes(data, channel) {
+    updateToursPickupRoutes(channel, data) {
         return this.request(TourCMS.TOUR_PICKUP_ROUTES_UPDATE, channel, TourCMS.HTTP_VERB_POST, data);
     }
 
-    toursPickupRoutesAddPickup(data, channel) {
+    toursPickupRoutesAddPickup(channel, data) {
         return this.request(TourCMS.TOUR_PICKUP_ROUTES_ADD_PICKUP, channel, TourCMS.HTTP_VERB_POST, data);
     }
 
-    toursPickupRoutesUpdatePickup(data, channel) {
+    toursPickupRoutesUpdatePickup(channel, data) {
         return this.request(TourCMS.TOUR_PICKUP_ROUTES_UPDATE_PICKUP, channel, TourCMS.HTTP_VERB_POST, data);
     }
 
-    toursPickupRoutesDeletePickup(data, channel) {
+    toursPickupRoutesDeletePickup(channel, data) {
         return this.request(TourCMS.TOUR_PICKUP_ROUTES_DELETE_PICKUP, channel, TourCMS.HTTP_VERB_POST, data);
     }
 
@@ -664,7 +673,7 @@ export default class TourCMS {
         return (this.request(TourCMS.P_ACCOUNT_CREATE, 0, TourCMS.HTTP_VERB_POST, uploadInfo));
     }
 
-    updateAccount(uploadInfo, channel) {
+    updateAccount(channel, uploadInfo) {
         return (this.request(TourCMS.P_ACCOUNT_UPDATE, channel, TourCMS.HTTP_VERB_POST, uploadInfo));
     }
 
@@ -673,11 +682,11 @@ export default class TourCMS {
         return this.request(endpoint, 0);
     }
 
-    createChannel(channelInfo, channel) {
+    createChannel(channel, channelInfo) {
         return (this.request(TourCMS.P_CHANNEL_CREATE, channel, TourCMS.HTTP_VERB_POST, channelInfo));
     }
 
-    updateChannel(channelInfo, channel) {
+    updateChannel(channel, channelInfo) {
         return (this.request(TourCMS.P_CHANNEL_UPDATE, channel, TourCMS.HTTP_VERB_POST, channelInfo));
     }
 
@@ -685,15 +694,15 @@ export default class TourCMS {
         return (this.request(TourCMS.C_MARKUPS_SHOW, channel, TourCMS.HTTP_VERB_GET));
     }
 
-    createTourGeopoint(geopoint, channel) {
+    createTourGeopoint(channel, geopoint) {
         return this.request(TourCMS.TOUR_GEOS_CREATE, channel, TourCMS.HTTP_VERB_POST, geopoint);
     }
 
-    updateTourGeopoint(geopoint, channel) {
+    updateTourGeopoint(channel, geopoint) {
         return this.request(TourCMS.TOUR_GEOS_UPDATE, channel, TourCMS.HTTP_VERB_POST, geopoint);
     }
 
-    deleteTourGeopoint(geopoint, channel) {
+    deleteTourGeopoint(channel, geopoint) {
         return this.request(TourCMS.TOUR_GEOS_DELETE, channel, TourCMS.HTTP_VERB_POST, geopoint);
     }
 
