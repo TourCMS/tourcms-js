@@ -17,6 +17,13 @@
     "axios": "^1.7.2",
     "crypto-js": "^4.2.0",
     "rawurlencode": "^1.0.2",
+    "webpack": "^5.92.1",
     "x2js": "^3.4.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "webpack-cli": "^5.1.4"
   }
 }
