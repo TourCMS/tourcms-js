@@ -20,6 +20,7 @@ export default class TourCMS {
     static C_AGENTS_SEARCH = '/c/agents/search.xml'
     static P_AGENTS_SEARCH = '/p/agents/search.xml'
     static C_AGENTS_UPDATE = '/c/agents/update.xml'
+    static API_AGENT_PROFILE = '/api/agent/profile/get.xml'
 
     // API
     static API_RATE_LIMIT = '/api/rate_limit_status.xml'
@@ -604,6 +605,11 @@ export default class TourCMS {
 
     updateAgent(channel, agentData) {
         return (this.request(TourCMS.C_AGENTS_UPDATE, channel, TourCMS.HTTP_VERB_POST, agentData));
+    }
+
+    showAgentProfile(agent, channel = 0) {
+        let endpoint = TourCMS.API_AGENT_PROFILE + '?id=' + agent;
+        return (this.request(endpoint, channel));
     }
 
     // Payments
