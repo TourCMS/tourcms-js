@@ -18,5 +18,8 @@
     "crypto-js": "^4.2.0",
     "rawurlencode": "^1.0.2",
     "x2js": "^3.4.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.23.0"
   }
 }
