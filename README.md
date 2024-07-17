@@ -27,9 +27,9 @@ import TourCMS from 'tourcms-js'
 #### As browser JS script tag
 Otherwise, if you are using it on a script tag in browser, you need to import the class from some NPM CDN URL as UNPKG (https://unpkg.com/) or JSDelivr (https://www.jsdelivr.com/)
 ```js
-import TourCMS from 'https://unpkg.com/tourcms-js@2.0.0'
+import TourCMS from 'https://unpkg.com/tourcms-js@2.1.0'
 
-import TourCMS from 'https://cdn.jsdelivr.net/npm/tourcms-js@2.0.0'
+import TourCMS from 'https://cdn.jsdelivr.net/npm/tourcms-js@2.1.0'
 ```
 Please, note that script tag must have ```type="text"```attribute in order to work.
 
