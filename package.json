@@ -1,10 +1,10 @@
 {
-  "name": "tourcms-js-wrapper",
+  "name": "tourcms-js",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
-  "main": "tourcms.js",
+  "main": "./dist/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/TourCMS/tourcms-js.git"
@@ -18,5 +18,11 @@
     "crypto-js": "^4.2.0",
     "rawurlencode": "^1.0.2",
     "x2js": "^3.4.4"
-  }
+  },
+  "devDependencies": {
+    "esbuild": "0.23.0"
+  },
+  "contributors": [
+    "Armando Garrido (https://github.com/armando-palisis)"
+  ]
 }

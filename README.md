@@ -13,15 +13,28 @@ If you use this wrapper installing it from npm, all dependencies will be install
 Currently, for development purposes you need to execute `npm install` to install the dependencies
 
 ## Usage
+#### As NPM installed package
 
-Just import TourCMS wrapper class 
-
-
+If you are using it as npm package, you need to install it
+```sh
+npm i tourcms-js
+```
+And after, just import it
 ```js
-import TourCMS from 'tourcms'
+import TourCMS from 'tourcms-js'
 ```
 
-After, create a new object, and start working with it
+#### As browser JS script tag
+Otherwise, if you are using it on a script tag in browser, you need to import the class from some NPM CDN URL as UNPKG (https://unpkg.com/) or JSDelivr (https://www.jsdelivr.com/)
+```js
+import TourCMS from 'https://unpkg.com/tourcms-js@2.1.0'
+
+import TourCMS from 'https://cdn.jsdelivr.net/npm/tourcms-js@2.1.0'
+```
+Please, note that script tag must have ```type="text"```attribute in order to work.
+
+
+After import, create a new object, and start working with it
 
 ```js
 // API Settings
