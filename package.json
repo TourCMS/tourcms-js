@@ -1,7 +1,7 @@
 {
   "name": "tourcms-js",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
   "main": "./dist/main.js",
