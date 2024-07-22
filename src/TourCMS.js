@@ -24,7 +24,7 @@ export default class TourCMS {
     static API_AGENT_PROFILE_UPDATE = '/api/agent/profile/update.xml'
 
     // API
-    static API_RATE_LIMIT = '/api/rate_limit_status.xml'
+    static API_RATE_LIMIT_STATUS = '/api/rate_limit_status.xml'
 
     // CHANNELS
     static P_CHANNELS_LIST = '/p/channels/list.xml'
@@ -223,7 +223,7 @@ export default class TourCMS {
     }
 
     APIRateLimitStatus(channel = 0) {
-        return this.request(TourCMS.APIRateLimitStatus, channel)
+        return this.request(TourCMS.API_RATE_LIMIT_STATUS, channel)
     }
 
     // Channel Methods
@@ -313,6 +313,7 @@ export default class TourCMS {
     }
 
     listTours(channel = 0, params = '') {
+        params = this.validateParams(params)
         if (channel == 0) {
             return this.request(TourCMS.P_TOURS_LIST + params, channel)
         } else {
@@ -376,14 +377,15 @@ export default class TourCMS {
     }
 
     showTourDatesAndDeals(channel, tour, params = '') {
-        if (params) params = "&".params;
+        if (params) params = "&" + params
         let endpoint = TourCMS.C_TOUR_DATESPRICES_SEARCH + '?id=' + tour + params
         return this.request(endpoint, channel)
     }
 
     showTourDepartures(channel, tour, params = '') {
-        if (params) params = "&".params;
-        return this.request(TourCMS.C_TOUR_DATESPRICES_DEPARTURES_SHOW + '?id=' + tour + params, channel)
+        if (params) params = "&" + params;
+        let endpoint = TourCMS.C_TOUR_DATESPRICES_DEPARTURES_SHOW + '?id=' + tour + params
+        return this.request(endpoint, channel)
     }
 
     showTourFreesale(channel, tour) {
@@ -727,7 +729,7 @@ export default class TourCMS {
 
     getListTours(channel, params) {
         params = this.validateParams(params);
-        let endpoint = TourCMS.TOURS_LIST_GET + params
+        let endpoint = TourCMS.TOURS_IMPORTER_LIST_GET + params
         return this.request(endpoint, channel, TourCMS.HTTP_VERB_GET);
     }
 
