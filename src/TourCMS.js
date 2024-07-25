@@ -338,8 +338,8 @@ export default class TourCMS {
 
     }
 
-    deletetour(channel, tour) {
-        let endpoint = this.TOUR_DELETE + '?id=' + tour;
+    deleteTour(channel, tour) {
+        let endpoint = TourCMS.C_TOUR_DELETE + '?id=' + tour;
         return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST));
     }
 
@@ -360,7 +360,7 @@ export default class TourCMS {
         return this.request(TourCMS.C_TOURS_FILES_UPLOAD_PROCESS, channel, TourCMS.HTTP_VERB_POST, uploadInfo)
     }
 
-    deletetourimage(channel, imageInfo) {
+    deleteTourImage(channel, imageInfo) {
         return this.request(TourCMS.C_TOUR_IMAGES_DELETE, channel, TourCMS.HTTP_VERB_POST, imageInfo)
     }
 
@@ -587,11 +587,12 @@ export default class TourCMS {
     }
 
     // Agents methods 
-    searchAgents(channel) {
+    searchAgents(channel, params = '') {
+        params = params ? '?' + params : params;
         if (channel == 0) {
-            return this.request(TourCMS.P_AGENTS_SEARCH, channel)
+            return this.request(TourCMS.P_AGENTS_SEARCH + params, channel)
         } else {
-            return this.request(TourCMS.C_AGENTS_SEARCH, channel)
+            return this.request(TourCMS.C_AGENTS_SEARCH + params, channel)
         }
     }
 
