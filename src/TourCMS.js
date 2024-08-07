@@ -58,7 +58,7 @@ export default class TourCMS {
     static C_TOUR_IMAGES_DELETE = '/c/tour/images/delete.xml'
     static C_TOUUR_DOCUMENT_DELETE = '/c/tour/document/delete.xml'
     static C_TOUR_CHECKAVAIL = '/c/tour/datesprices/checkavail.xml'
-    static TOURS_SEARCH_CRITERIA_GET = "/api/tours/searchcriteria/get.xml";
+    static TOURS_SEARCH_CRITERIA_GET = "/api/tours/search_criteria/get.xml";
 
     // TOUR IMPORTER
     static TOURS_IMPORTER_FACETS_GET = "/api/tours/importer/get_tour_facets.xml";
