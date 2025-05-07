@@ -138,6 +138,8 @@ export default class TourCMS {
     static C_CUSTOMER_SHOW = '/c/customer/show.xml'
     static C_CUSTOMER_UPDATE = '/c/customer/update.xml'
     static C_CUSTOMER_LOGIN_SEARCH = '/c/customers/login_search.xml'
+    static C_CUSTOMER_CREATE = '/c/customer/create.xml'
+    static C_CUSTOMER_VERIFICATION = '/c/customer/verification.xml'
 
     // MIXED
     static C_START_AGENT_LOGIN = '/c/start_agent_login.xml'
@@ -589,6 +591,16 @@ export default class TourCMS {
     checkCustomerLogin(channel, customer, password) {
         let endpoint = TourCMS.C_CUSTOMER_LOGIN_SEARCH + '?customer_username=' + customer + '&customer_password=' + password;
         return (this.request(endpoint, channel));
+    }
+
+    createCustomer(channel, customer) {
+        let endpoint = TourCMS.C_CUSTOMER_CREATE;
+        return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST,customer));
+    }
+
+    verifyCustomer(channel, customer) {
+        let endpoint = TourCMS.C_CUSTOMER_VERIFICATION;
+        return (this.request(endpoint, channel, TourCMS.HTTP_VERB_POST,customer));
     }
 
     // Agents methods 
