@@ -1,7 +1,7 @@
 {
   "name": "tourcms-js",
   "type": "module",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
   "main": "./dist/main.js",
@@ -20,9 +20,11 @@
     "x2js": "^3.4.4"
   },
   "devDependencies": {
-    "esbuild": "0.23.0"
+    "esbuild": "^0.25.4"
   },
   "contributors": [
-    "Armando Garrido (https://github.com/armando-palisis)"
+    "Armando Garrido (https://github.com/armando-palisis)",
+    "Belén Ruíz (https://github.com/belen-palisis)",
+    "Paul Slugocki (https://github.com/paulslugocki)"
   ]
 }
