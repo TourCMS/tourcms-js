@@ -653,7 +653,7 @@ export default class TourCMS {
     }
 
     checkPaymentStatus(channel, paymentUUID) {
-        return (this.request(TourCMS.C_MARKUPS_SHOW+'?uuid='+paymentUUID, channel, TourCMS.HTTP_VERB_GET));
+        return (this.request(TourCMS.CHECK_PAYMENT_STATUS+'?uuid='+paymentUUID, channel, TourCMS.HTTP_VERB_GET));
     }
 
     payworksBookingPaymentNew(channel, payment) {
