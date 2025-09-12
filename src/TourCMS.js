@@ -155,6 +155,10 @@ export default class TourCMS {
     static HMAC_SHA3 = 'SHA3'
     static HMAC_SHA256 = 'SHA256'
     static HMAC_SHA512 = 'SHA512'
+
+    //PAYMENTS
+    static CHECK_PAYMENT_STATUS = '/api/payments/status/get.xml';
+    static CREATE_PAYMENT_LINK = '/api/payments/link/create.xml';
         
     axios
     baseURL = ''
@@ -642,6 +646,14 @@ export default class TourCMS {
         params = this.validateParams(params);
         let endpoint = TourCMS.C_BOOKING_PAYMENT_LIST + params
         return (this.request(endpoint, channel));
+    }
+
+    createPaymentLink(channel, postData) {
+        return (this.request(TourCMS.CREATE_PAYMENT_LINK, channel, TourCMS.HTTP_VERB_POST, postData));
+    }
+
+    checkPaymentStatus(channel, paymentUUID) {
+        return (this.request(TourCMS.C_MARKUPS_SHOW+'?uuid='+paymentUUID, channel, TourCMS.HTTP_VERB_GET));
     }
 
     payworksBookingPaymentNew(channel, payment) {
