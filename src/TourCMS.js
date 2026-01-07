@@ -59,6 +59,11 @@ export default class TourCMS {
     static C_TOUUR_DOCUMENT_DELETE = '/c/tour/document/delete.xml'
     static C_TOUR_CHECKAVAIL = '/c/tour/datesprices/checkavail.xml'
     static TOURS_SEARCH_CRITERIA_GET = "/api/tours/search_criteria/get.xml";
+    static PATH_API_TOURS_TIERS_ADD = "/api/tours/tour_tiers/tour_tier_add.xml";
+	static PATH_API_TOURS_TIERS_UPDATE = "/api/tours/tour_tiers/tour_tier_update.xml";
+	static PATH_API_TOURS_TIERS_DELETE = "/api/tours/tour_tiers/tour_tier_delete.xml";
+	static PATH_API_TOURS_TIERS_SHOW = "/api/tours/tour_tiers/tour_tier_show.xml";
+	static PATH_API_TOURS_TIERS_LIST = "/api/tours/tour_tiers/tour_tier_list.xml";
 
     // TOUR IMPORTER
     static TOURS_IMPORTER_FACETS_GET = "/api/tours/importer/get_tour_facets.xml";
@@ -401,6 +406,26 @@ export default class TourCMS {
 
     toursSearchCriteria(channel) {
         return this.request(TourCMS.TOURS_SEARCH_CRITERIA_GET, channel)
+    }
+    
+    addTier(channel, postData) {
+        return this.request(TourCMS.PATH_API_TOURS_TIERS_ADD, channel, TourCMS.HTTP_VERB_POST, postData);
+    }
+
+    updateTier(channel, postData) {
+        return this.request(TourCMS.PATH_API_TOURS_TIERS_UPDATE, channel, TourCMS.HTTP_VERB_POST, postData);
+    }
+
+    deleteTier(channel, postData) {
+        return this.request(TourCMS.PATH_API_TOURS_TIERS_DELETE, channel, TourCMS.HTTP_VERB_POST, postData);
+    }
+
+    getTier(channel, postData) {
+        return this.request(TourCMS.PATH_API_TOURS_TIERS_SHOW, channel, TourCMS.HTTP_VERB_POST, postData);
+    }
+
+    listTiers(channel, postData) {
+        return this.request(TourCMS.PATH_API_TOURS_TIERS_LIST, channel, TourCMS.HTTP_VERB_POST, postData);
     }
 
     // Raw departure methods
