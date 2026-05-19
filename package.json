@@ -5,6 +5,9 @@
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
   "main": "./dist/main.js",
+  "scripts": {
+    "build": "esbuild index.js --bundle --minify --sourcemap --target=chrome80,firefox80,safari13 --format=esm --supported:destructuring=true --outfile=./dist/main.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/TourCMS/tourcms-js.git"
@@ -20,7 +23,7 @@
     "x2js": "^3.4.4"
   },
   "devDependencies": {
-    "esbuild": "^0.25.4"
+    "esbuild": "^0.25.12"
   },
   "contributors": [
     "Armando Garrido (https://github.com/armando-palisis)",
