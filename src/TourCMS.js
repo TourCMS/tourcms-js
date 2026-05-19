@@ -229,8 +229,9 @@ export default class TourCMS {
 
     // API methods (Housekeeping)
 
-    listChannels() {
-        return this.request(TourCMS.P_CHANNELS_LIST)
+    listChannels(params = "") {
+        params = this.validateParams(params)
+        return this.request(TourCMS.P_CHANNELS_LIST + params)
     }
 
     APIRateLimitStatus(channel = 0) {
