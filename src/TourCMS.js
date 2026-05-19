@@ -150,7 +150,6 @@ export default class TourCMS {
     static C_START_AGENT_LOGIN = '/c/start_agent_login.xml'
     static C_RETRIEVE_AGENT_BOOKING_KEY = '/c/retrieve_agent_booking_key.xml'
     static C_BOOKING_PAYMENT_LIST = '/c/booking/payment/list.xml'
-    static C_BOOKING_PAYMENT_PAYWORKS_NEW = '/c/booking/payment/payworks/new.xml'
     static C_SUPPLIER_SHOW = '/c/supplier/show.xml'
     static C_STAFF_LIST = '/c/staff/list.xml'
 
@@ -170,7 +169,7 @@ export default class TourCMS {
     marketplaceId = ''
     APIKey = ''
     lastResponseHeaders = []
-    userAgent = 'TourCMS JS Wrapper v2.0.0'
+    userAgent = 'TourCMS JS Wrapper v2.6.0'
     x2js = null
 
     constructor(marketplaceId, APIKey) {
@@ -230,8 +229,9 @@ export default class TourCMS {
 
     // API methods (Housekeeping)
 
-    listChannels() {
-        return this.request(TourCMS.P_CHANNELS_LIST)
+    listChannels(params = "") {
+        params = this.validateParams(params)
+        return this.request(TourCMS.P_CHANNELS_LIST + params)
     }
 
     APIRateLimitStatus(channel = 0) {
@@ -679,10 +679,6 @@ export default class TourCMS {
 
     checkPaymentStatus(channel, paymentUUID) {
         return (this.request(TourCMS.CHECK_PAYMENT_STATUS+'?uuid='+paymentUUID, channel, TourCMS.HTTP_VERB_GET));
-    }
-
-    payworksBookingPaymentNew(channel, payment) {
-        return (this.request(TourCMS.C_BOOKING_PAYMENT_PAYWORKS_NEW, channel, TourCMS.HTTP_VERB_POST, payment));
     }
 
     // Staff members
