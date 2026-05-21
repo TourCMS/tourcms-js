@@ -1,13 +1,22 @@
 {
   "name": "tourcms-js",
   "type": "module",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
   "main": "./dist/main.js",
+  "module": "./dist/main.js",
+  "exports": {
+    ".": "./dist/main.js"
+  },
   "scripts": {
     "build": "esbuild index.js --bundle --minify --sourcemap --target=chrome80,firefox80,safari13 --format=esm --supported:destructuring=true --outfile=./dist/main.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/TourCMS/tourcms-js.git"

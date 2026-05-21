@@ -41,3 +41,9 @@ jobs:
 
       - name: Publishing to npmjs
         run: npm publish --provenance
+
+      - name: Verify package contents
+        run: |
+            test -f dist/main.js
+            test -f dist/main.js.map
+            npm pack --dry-run
