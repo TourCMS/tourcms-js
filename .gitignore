@@ -1,5 +1,1 @@
 node_modules/
-# exclude everything in dist
-dist/*
-# exception to the rule
-!dist/.gitkeep 

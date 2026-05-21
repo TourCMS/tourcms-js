@@ -168,7 +168,7 @@ export default class TourCMS {
     marketplaceId = ''
     APIKey = ''
     lastResponseHeaders = []
-    userAgent = 'TourCMS JS Wrapper v2.9.0'
+    userAgent = 'TourCMS JS Wrapper v2.9.1'
     x2js = null
 
     constructor(marketplaceId, APIKey) {
