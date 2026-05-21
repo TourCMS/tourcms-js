@@ -1,7 +1,7 @@
 {
   "name": "tourcms-js",
   "type": "module",
-  "version": "2.9.1",
+  "version": "2.10.0",
   "author": "TourCMS <juan.gonzalez@palisis.com>",
   "description": "TourCMS JS Wrapper",
   "main": "./dist/main.js",
@@ -38,6 +38,7 @@
     "Armando Garrido (https://github.com/armando-palisis)",
     "Belén Ruíz (https://github.com/belen-palisis)",
     "Juan Carlos Ramírez Guerrero (https://github.com/palisis-juancarlos)",
+    "Juan Ramón González Morales (https://github.com/palisis-juanra)",
     "Paul Slugocki (https://github.com/paulslugocki)"
   ]
 }
