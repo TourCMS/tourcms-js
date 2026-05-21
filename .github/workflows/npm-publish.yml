@@ -40,6 +40,4 @@ jobs:
           fi
 
       - name: Publishing to npmjs
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance
