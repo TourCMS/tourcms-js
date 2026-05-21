@@ -1,5 +1,4 @@
 import axios from 'axios'
-import rawurlencode from 'rawurlencode'
 import X2JS from 'x2js'
 import { HmacMD5, HmacSHA1, HmacSHA256, HmacSHA3, HmacSHA512 } from 'crypto-js'
 import Base64 from 'crypto-js/enc-base64';
@@ -804,7 +803,7 @@ export default class TourCMS {
     generateSignature(path, channelId, verb, outboundTime) {
 
         let stringToSign = channelId + '/' + this.marketplaceId + '/' + verb + '/' + outboundTime + path
-        let signature = rawurlencode(Base64.stringify(HmacSHA256(stringToSign, this.APIKey)));
+        let signature = encodeURIComponent(Base64.stringify(HmacSHA256(stringToSign, this.APIKey)));
 
         return signature
     }
