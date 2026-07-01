@@ -63,6 +63,7 @@ export default class TourCMS {
 	static PATH_API_TOURS_TIERS_DELETE = "/api/tours/tour_tiers/tour_tier_delete.xml";
 	static PATH_API_TOURS_TIERS_SHOW = "/api/tours/tour_tiers/tour_tier_show.xml";
 	static PATH_API_TOURS_TIERS_LIST = "/api/tours/tour_tiers/tour_tier_list.xml";
+	static PATH_API_BOOKING_WEBHOOK_TRIGGER = "/api/booking/webhook/trigger.xml";
 
     // TOUR IMPORTER
     static TOURS_IMPORTER_FACETS_GET = "/api/tours/importer/get_tour_facets.xml";
@@ -583,6 +584,12 @@ export default class TourCMS {
 
     sendBookingEmail(channel, postData) {
         return this.request(TourCMS.C_BOOKING_SEND_EMAIL, channel, TourCMS.HTTP_VERB_POST, postData)
+    }
+
+    triggerBookingWebhook(channel, booking, event) {
+        let xmlString = "<booking><booking_id>"+booking+"</booking_id><event>"+event+"</event></booking>";
+        let postData = this.parseXML(xmlString);
+        return (this.request(TourCMS.PATH_API_BOOKING_WEBHOOK_TRIGGER, channel, TourCMS.HTTP_VERB_POST, postData));
     }
 
     redeemVoucher(channel = 0, voucherData) {
